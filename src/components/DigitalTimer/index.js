@@ -9,7 +9,7 @@ class DigitalTimer extends Component {
       seconds: '00',
       timer: 25,
       startOrPause: true,
-      sec: 60,
+      sec: 15,
       min: 25,
       pause: true,
     }
@@ -47,55 +47,21 @@ class DigitalTimer extends Component {
     //  console.log(sec.toString().length === 1)
     // console.log(`min value : ${min} ,type:${typeof min}`)
 
+    console.log(seconds)
+
     if (!startOrPause) {
-      if (min <= 10 && sec <= 60) {
-        this.setState(prev => ({
-          min: `0${parseInt(prev.min)}`,
-          timer: `0${parseInt(prev.min)}`,
-        }))
-        console.log('state 1')
+      if (seconds === '00') {
+        this.setState(prev => ({seconds: 60, timer: prev.timer - 1}))
       }
 
-      if (min === '00' && seconds === '00') {
-        console.log('entered')
-        this.setState({timer: '00', sec: '00', seconds: '00'})
-      } else if (sec <= 10) {
-        this.setState(prev => ({
-          seconds: `0${sec - 1}`,
-          sec: prev.sec - 1,
-        }))
-        console.log('state 3')
-      } else if (sec === 0) {
-        if (min <= 10) {
-          this.setState({min: `0${parseInt(min) - 1}`, sec: 59})
-        }
-        this.setState({
-          sec: 60,
-          //   min: min - 1,
-        })
-        console.log('state 2')
-      } else {
-        if (min <= 10) {
-          this.setState(prev => ({
-            seconds: prev.sec - 1,
-            sec: prev.sec - 1,
-            min: `0${parseInt(prev.min)}`,
-            timer: `0${parseInt(prev.min)}`,
-          }))
+      if (seconds <= 60) {
+        if (seconds <= 10 && seconds >= 1) {
+          this.setState(prev => ({seconds: `0${prev.seconds - 1}`}))
         } else {
-          this.setState(prev => ({
-            seconds: prev.sec - 1,
-            sec: prev.sec - 1,
-            timer: min,
-          }))
+          this.setState(prev => ({seconds: prev.seconds - 1}))
         }
-
-        console.log('state 4')
       }
     }
-    //  else {
-    //   // this.setState(prev => ({startOrPause: !prev.startOrPause}))
-    // }
   }
 
   plusClick = () => {
