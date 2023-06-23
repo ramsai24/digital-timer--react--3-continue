@@ -7,7 +7,7 @@ class DigitalTimer extends Component {
     this.state = {
       minutes: 25,
       seconds: '00',
-      timer: 25,
+      timer: '25',
       startOrPause: true,
       sec: 15,
       min: 25,
@@ -37,7 +37,7 @@ class DigitalTimer extends Component {
   }
 
   time = () => {
-    const {sec, seconds, min, startOrPause} = this.state
+    const {sec, seconds, timer, startOrPause} = this.state
     // console.log(startOrPause)
     // if (sec === 60) {
     //   this.setState(prev => ({
@@ -47,29 +47,41 @@ class DigitalTimer extends Component {
     //  console.log(sec.toString().length === 1)
     // console.log(`min value : ${min} ,type:${typeof min}`)
 
-    console.log(seconds)
+    // console.log(seconds, timer)
 
     if (!startOrPause) {
-      if (seconds === '00') {
-        this.setState(prev => ({seconds: 60, timer: prev.timer - 1}))
-      }
+      if (seconds === '00' && timer === '00') {
+        this.setState({seconds: '00', timer: '00'})
+      } else {
+        if (seconds === '00' && timer > 10) {
+          this.setState(prev => ({seconds: 60, timer: prev.timer - 1}))
+        }
 
-      if (seconds <= 60) {
-        if (seconds <= 10 && seconds >= 1) {
-          this.setState(prev => ({seconds: `0${prev.seconds - 1}`}))
+        if (timer <= 10 && seconds === '00') {
+          this.setState(prev => ({
+            timer: `0${prev.timer - 1}`,
+            seconds: 59,
+          }))
         } else {
-          this.setState(prev => ({seconds: prev.seconds - 1}))
+          console.log(timer)
+          if (seconds <= 60) {
+            if (seconds <= 10 && seconds >= 1) {
+              this.setState(prev => ({seconds: `0${prev.seconds - 1}`}))
+            } else {
+              this.setState(prev => ({seconds: prev.seconds - 1}))
+            }
+          }
         }
       }
     }
   }
 
   plusClick = () => {
-    const {minutes} = this.state
-    if (parseInt(minutes) <= 10) {
+    const {timer, minutes} = this.state
+    if (parseInt(timer) < 9) {
       this.setState({
         minutes: `0${parseInt(minutes) + 1}`,
-        timer: `0${parseInt(minutes) + 1}`,
+        timer: `0${parseInt(timer) + 1}`,
         // min: `0${parseInt(prev.minutes) + 1}`,
         // minutes: `0${parseInt(prev.minutes) + 1}`,
         // timer: `0${parseInt(prev.minutes) + 1}`,
@@ -86,17 +98,23 @@ class DigitalTimer extends Component {
 
   minusClick = () => {
     //  const {minutes} = this.state
-    const {minutes} = this.state
-    if (parseInt(minutes) <= 10) {
-      this.setState(prev => ({
-        minutes: `0${parseInt(prev.minutes) - 1}`,
-        timer: `0${parseInt(prev.minutes) - 1}`,
-      }))
+    const {timer} = this.state
+    console.log(timer)
+    if (parseInt(timer) === 0) {
+      this.setState({timer: '00'})
     } else {
-      this.setState(prev => ({
-        minutes: parseInt(prev.minutes) - 1,
-        timer: parseInt(prev.minutes) - 1,
-      }))
+      console.log(timer)
+      if (parseInt(timer) <= 10 && parseInt(timer) > 0) {
+        this.setState(prev => ({
+          minutes: `0${parseInt(prev.minutes) - 1}`,
+          timer: `0${parseInt(prev.minutes) - 1}`,
+        }))
+      } else {
+        this.setState(prev => ({
+          minutes: parseInt(prev.minutes) - 1,
+          timer: parseInt(prev.minutes) - 1,
+        }))
+      }
     }
   }
 
@@ -137,7 +155,7 @@ class DigitalTimer extends Component {
 
     // console.log(sec.toString().length)
     // console.log(startOrPause)
-    console.log(timer, seconds)
+    // console.log(timer, seconds)
 
     return (
       <div className="app-container">
