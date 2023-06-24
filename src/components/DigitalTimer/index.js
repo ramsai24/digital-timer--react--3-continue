@@ -188,11 +188,14 @@ class DigitalTimer extends Component {
                     </div>
                   ) : (
                     <div className="start-or-pause-container">
-                      <button className="btn-start-pause-reset" type="button">
+                      <button
+                        className="btn-start-pause-reset"
+                        onClick={this.pause}
+                        type="button"
+                      >
                         <img
                           className="img"
                           alt="pause icon"
-                          onClick={this.pause}
                           src="https://assets.ccbp.in/frontend/react-js/pause-icon-img.png"
                         />
                         Pause
@@ -201,9 +204,12 @@ class DigitalTimer extends Component {
                   )}
                 </div>
                 <div className="reset-container start-or-pause-container">
-                  <button type="button" className="btn-start-pause-reset">
+                  <button
+                    onClick={this.reset}
+                    type="button"
+                    className="btn-start-pause-reset"
+                  >
                     <img
-                      onClick={this.reset}
                       className="img"
                       alt="reset icon"
                       src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
