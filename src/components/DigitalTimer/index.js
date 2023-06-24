@@ -10,7 +10,7 @@ class DigitalTimer extends Component {
       timer: '25',
       startOrPause: true,
       sec: 15,
-      min: 25,
+
       pause: true,
     }
   }
@@ -37,7 +37,7 @@ class DigitalTimer extends Component {
   }
 
   time = () => {
-    const {sec, seconds, timer, startOrPause} = this.state
+    const {minutes, seconds, timer, startOrPause} = this.state
     // console.log(startOrPause)
     // if (sec === 60) {
     //   this.setState(prev => ({
@@ -51,7 +51,7 @@ class DigitalTimer extends Component {
 
     if (!startOrPause) {
       if (seconds === '00' && timer === '00') {
-        this.setState({seconds: '00', timer: '00'})
+        this.setState({seconds: '00', timer: minutes, startOrPause: true})
       } else {
         if (seconds === '00' && timer > 10) {
           this.setState(prev => ({seconds: 60, timer: prev.timer - 1}))
@@ -63,7 +63,7 @@ class DigitalTimer extends Component {
             seconds: 59,
           }))
         } else {
-          console.log(timer)
+          console.log(minutes)
           if (seconds <= 60) {
             if (seconds <= 10 && seconds >= 1) {
               this.setState(prev => ({seconds: `0${prev.seconds - 1}`}))
@@ -121,7 +121,7 @@ class DigitalTimer extends Component {
   start = () => {
     this.setState(prev => ({
       startOrPause: !prev.startOrPause,
-      min: prev.timer - 1,
+
       pause: false,
     }))
   }
@@ -183,7 +183,7 @@ class DigitalTimer extends Component {
                           alt="play icon"
                           src="https://assets.ccbp.in/frontend/react-js/play-icon-img.png"
                         />
-                        <p>Start</p>
+                        Start
                       </button>
                     </div>
                   ) : (
@@ -195,7 +195,7 @@ class DigitalTimer extends Component {
                           onClick={this.pause}
                           src="https://assets.ccbp.in/frontend/react-js/pause-icon-img.png"
                         />
-                        <p>Pause</p>
+                        Pause
                       </button>
                     </div>
                   )}
